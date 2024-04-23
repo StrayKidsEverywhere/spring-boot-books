@@ -6,6 +6,7 @@ import com.example.spring.book.service.BookService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class BookApiController {
@@ -35,5 +36,10 @@ public class BookApiController {
     @PostMapping("/api/v1/book")
     public BookEntity create(@RequestBody BookEntity book){
         return bookService.create(book.getTitle(), book.getDescription());
+    }
+
+    @PutMapping("/api/v1/book/{id}")
+    public BookEntity edit(@PathVariable Integer id, @RequestBody BookEntity book){
+        return bookService.edit(book).orElseThrow(ResourceNotFoundException::new);
     }
 }
